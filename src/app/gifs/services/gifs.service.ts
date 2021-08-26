@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,7 +7,11 @@ import { Injectable } from '@angular/core';
 })
 export class GifsService {
 
+  private apiKey    : string = 'sLimjk8VdMfRHlHlEYi0jSicHezH4q1D';
   private _historial: string[] = [];
+
+  // Podemos trabajar con peticiones http con Observables
+  constructor( private http: HttpClient) {}
 
   get historial(){
     return [...this._historial];
@@ -20,7 +25,12 @@ export class GifsService {
       this._historial.unshift( query );
       this._historial= this._historial.splice(0,10);
     }
-    console.log( this._historial );
     
+    this.http.get('https://api.giphy.com/v1/gifs/search?api_key=sLimjk8VdMfRHlHlEYi0jSicHezH4q1D&q=dragon ball z&limit=10')
+      .subscribe( (resp: any) => {
+        console.log(resp.data);
+      });
+    
+
   }
 }

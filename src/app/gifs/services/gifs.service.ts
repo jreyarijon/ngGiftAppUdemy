@@ -20,8 +20,9 @@ export class GifsService {
       this._historial = JSON.parse( localStorage.getItem('historial')! );
     }
     */
-    
+    // SEGUNDA FORMA
     this._historial = JSON.parse( localStorage.getItem('historial')! ) || [];
+    this.resultados = JSON.parse( localStorage.getItem('gifs')! ) || [];
   }
 
   get historial(){
@@ -44,6 +45,7 @@ export class GifsService {
       .subscribe( resp  => {
         console.log(resp.data);
         this.resultados = resp.data;
+        localStorage.setItem('gifs', JSON.stringify( this.resultados ));
       });
     
 

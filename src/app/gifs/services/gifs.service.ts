@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Gif, SearchGifsResponse } from '../interfaces/gifs.interface';
 
 @Injectable({
-  // Permite que los servicios esten definidos en el root. Evitamos tener que expecificarlo en el module.ts
   providedIn: 'root'
 })
 export class GifsService {
@@ -13,14 +12,7 @@ export class GifsService {
 
   public resultados: Gif[] = [];
 
-  // Podemos trabajar con peticiones http con Observables
   constructor( private http: HttpClient) {
-    /*  PRIMERA FORMA
-    if( localStorage.getItem('historial') ) {
-      this._historial = JSON.parse( localStorage.getItem('historial')! );
-    }
-    */
-    // SEGUNDA FORMA
     this._historial = JSON.parse( localStorage.getItem('historial')! ) || [];
     this.resultados = JSON.parse( localStorage.getItem('gifs')! ) || [];
   }
@@ -37,7 +29,6 @@ export class GifsService {
       this._historial.unshift( query );
       this._historial= this._historial.splice(0,10);
 
-      // Almacenar de manera local para que no se pierda al cerrar sesion en el navegador
       localStorage.setItem('historial', JSON.stringify( this._historial ));
     }
     
